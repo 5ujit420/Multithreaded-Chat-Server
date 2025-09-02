@@ -1,0 +1,3 @@
+/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles/chat_server.dir
+/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles/edit_cache.dir
+/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles/rebuild_cache.dir

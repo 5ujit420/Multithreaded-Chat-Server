@@ -1,6 +1,10 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-int server_init();
+#include "client.h"
+
+int init_server(char *PORT);
+
+void run_server(int sock_fd);
 
 #endif

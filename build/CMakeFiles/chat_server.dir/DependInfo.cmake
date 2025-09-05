@@ -8,9 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/konkerer/dev/Multithreaded-Chat-Server/run.c" "CMakeFiles/chat_server.dir/run.c.o" "gcc" "CMakeFiles/chat_server.dir/run.c.o.d"
+  "/home/konkerer/dev/Multithreaded-Chat-Server/src/client.c" "CMakeFiles/chat_server.dir/src/client.c.o" "gcc" "CMakeFiles/chat_server.dir/src/client.c.o.d"
   "/home/konkerer/dev/Multithreaded-Chat-Server/src/logger.c" "CMakeFiles/chat_server.dir/src/logger.c.o" "gcc" "CMakeFiles/chat_server.dir/src/logger.c.o.d"
-  "/home/konkerer/dev/Multithreaded-Chat-Server/src/main.c" "CMakeFiles/chat_server.dir/src/main.c.o" "gcc" "CMakeFiles/chat_server.dir/src/main.c.o.d"
   "/home/konkerer/dev/Multithreaded-Chat-Server/src/server.c" "CMakeFiles/chat_server.dir/src/server.c.o" "gcc" "CMakeFiles/chat_server.dir/src/server.c.o.d"
+  "/home/konkerer/dev/Multithreaded-Chat-Server/src/utils.c" "CMakeFiles/chat_server.dir/src/utils.c.o" "gcc" "CMakeFiles/chat_server.dir/src/utils.c.o.d"
   "" "chat_server" "gcc" "CMakeFiles/chat_server.dir/link.d"
   )
 

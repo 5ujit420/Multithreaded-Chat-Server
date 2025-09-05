@@ -1,1 +1,1 @@
-clang -Wl,--dependency-file=CMakeFiles/chat_server.dir/link.d CMakeFiles/chat_server.dir/src/main.c.o CMakeFiles/chat_server.dir/src/server.c.o CMakeFiles/chat_server.dir/src/logger.c.o -o chat_server
+clang -Wl,--dependency-file=CMakeFiles/chat_server.dir/link.d CMakeFiles/chat_server.dir/run.c.o CMakeFiles/chat_server.dir/src/server.c.o CMakeFiles/chat_server.dir/src/logger.c.o CMakeFiles/chat_server.dir/src/client.c.o CMakeFiles/chat_server.dir/src/utils.c.o -o chat_server

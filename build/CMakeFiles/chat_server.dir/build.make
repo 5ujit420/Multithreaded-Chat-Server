@@ -72,19 +72,19 @@ include CMakeFiles/chat_server.dir/flags.make
 CMakeFiles/chat_server.dir/codegen:
 .PHONY : CMakeFiles/chat_server.dir/codegen
 
-CMakeFiles/chat_server.dir/src/main.c.o: CMakeFiles/chat_server.dir/flags.make
-CMakeFiles/chat_server.dir/src/main.c.o: /home/konkerer/dev/Multithreaded-Chat-Server/src/main.c
-CMakeFiles/chat_server.dir/src/main.c.o: CMakeFiles/chat_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/chat_server.dir/src/main.c.o"
-	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/chat_server.dir/src/main.c.o -MF CMakeFiles/chat_server.dir/src/main.c.o.d -o CMakeFiles/chat_server.dir/src/main.c.o -c /home/konkerer/dev/Multithreaded-Chat-Server/src/main.c
+CMakeFiles/chat_server.dir/run.c.o: CMakeFiles/chat_server.dir/flags.make
+CMakeFiles/chat_server.dir/run.c.o: /home/konkerer/dev/Multithreaded-Chat-Server/run.c
+CMakeFiles/chat_server.dir/run.c.o: CMakeFiles/chat_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/chat_server.dir/run.c.o"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/chat_server.dir/run.c.o -MF CMakeFiles/chat_server.dir/run.c.o.d -o CMakeFiles/chat_server.dir/run.c.o -c /home/konkerer/dev/Multithreaded-Chat-Server/run.c
 
-CMakeFiles/chat_server.dir/src/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/chat_server.dir/src/main.c.i"
-	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/konkerer/dev/Multithreaded-Chat-Server/src/main.c > CMakeFiles/chat_server.dir/src/main.c.i
+CMakeFiles/chat_server.dir/run.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/chat_server.dir/run.c.i"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/konkerer/dev/Multithreaded-Chat-Server/run.c > CMakeFiles/chat_server.dir/run.c.i
 
-CMakeFiles/chat_server.dir/src/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/chat_server.dir/src/main.c.s"
-	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/konkerer/dev/Multithreaded-Chat-Server/src/main.c -o CMakeFiles/chat_server.dir/src/main.c.s
+CMakeFiles/chat_server.dir/run.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/chat_server.dir/run.c.s"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/konkerer/dev/Multithreaded-Chat-Server/run.c -o CMakeFiles/chat_server.dir/run.c.s
 
 CMakeFiles/chat_server.dir/src/server.c.o: CMakeFiles/chat_server.dir/flags.make
 CMakeFiles/chat_server.dir/src/server.c.o: /home/konkerer/dev/Multithreaded-Chat-Server/src/server.c
@@ -114,22 +114,54 @@ CMakeFiles/chat_server.dir/src/logger.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/chat_server.dir/src/logger.c.s"
 	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/konkerer/dev/Multithreaded-Chat-Server/src/logger.c -o CMakeFiles/chat_server.dir/src/logger.c.s
 
+CMakeFiles/chat_server.dir/src/client.c.o: CMakeFiles/chat_server.dir/flags.make
+CMakeFiles/chat_server.dir/src/client.c.o: /home/konkerer/dev/Multithreaded-Chat-Server/src/client.c
+CMakeFiles/chat_server.dir/src/client.c.o: CMakeFiles/chat_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/chat_server.dir/src/client.c.o"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/chat_server.dir/src/client.c.o -MF CMakeFiles/chat_server.dir/src/client.c.o.d -o CMakeFiles/chat_server.dir/src/client.c.o -c /home/konkerer/dev/Multithreaded-Chat-Server/src/client.c
+
+CMakeFiles/chat_server.dir/src/client.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/chat_server.dir/src/client.c.i"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/konkerer/dev/Multithreaded-Chat-Server/src/client.c > CMakeFiles/chat_server.dir/src/client.c.i
+
+CMakeFiles/chat_server.dir/src/client.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/chat_server.dir/src/client.c.s"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/konkerer/dev/Multithreaded-Chat-Server/src/client.c -o CMakeFiles/chat_server.dir/src/client.c.s
+
+CMakeFiles/chat_server.dir/src/utils.c.o: CMakeFiles/chat_server.dir/flags.make
+CMakeFiles/chat_server.dir/src/utils.c.o: /home/konkerer/dev/Multithreaded-Chat-Server/src/utils.c
+CMakeFiles/chat_server.dir/src/utils.c.o: CMakeFiles/chat_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/chat_server.dir/src/utils.c.o"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/chat_server.dir/src/utils.c.o -MF CMakeFiles/chat_server.dir/src/utils.c.o.d -o CMakeFiles/chat_server.dir/src/utils.c.o -c /home/konkerer/dev/Multithreaded-Chat-Server/src/utils.c
+
+CMakeFiles/chat_server.dir/src/utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/chat_server.dir/src/utils.c.i"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/konkerer/dev/Multithreaded-Chat-Server/src/utils.c > CMakeFiles/chat_server.dir/src/utils.c.i
+
+CMakeFiles/chat_server.dir/src/utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/chat_server.dir/src/utils.c.s"
+	clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/konkerer/dev/Multithreaded-Chat-Server/src/utils.c -o CMakeFiles/chat_server.dir/src/utils.c.s
+
 # Object files for target chat_server
 chat_server_OBJECTS = \
-"CMakeFiles/chat_server.dir/src/main.c.o" \
+"CMakeFiles/chat_server.dir/run.c.o" \
 "CMakeFiles/chat_server.dir/src/server.c.o" \
-"CMakeFiles/chat_server.dir/src/logger.c.o"
+"CMakeFiles/chat_server.dir/src/logger.c.o" \
+"CMakeFiles/chat_server.dir/src/client.c.o" \
+"CMakeFiles/chat_server.dir/src/utils.c.o"
 
 # External object files for target chat_server
 chat_server_EXTERNAL_OBJECTS =
 
-chat_server: CMakeFiles/chat_server.dir/src/main.c.o
+chat_server: CMakeFiles/chat_server.dir/run.c.o
 chat_server: CMakeFiles/chat_server.dir/src/server.c.o
 chat_server: CMakeFiles/chat_server.dir/src/logger.c.o
+chat_server: CMakeFiles/chat_server.dir/src/client.c.o
+chat_server: CMakeFiles/chat_server.dir/src/utils.c.o
 chat_server: CMakeFiles/chat_server.dir/build.make
 chat_server: CMakeFiles/chat_server.dir/compiler_depend.ts
 chat_server: CMakeFiles/chat_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable chat_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/konkerer/dev/Multithreaded-Chat-Server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable chat_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/chat_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

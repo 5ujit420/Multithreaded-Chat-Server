@@ -10,9 +10,11 @@ set(CMAKE_C_EXTENSIONS OFF)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 set(SOURCES
-		src/main.c 
+		run.c 
 		src/server.c 
 		src/logger.c 
+		src/client.c 
+		src/utils.c
 )
 
 add_executable(chat_server ${SOURCES})

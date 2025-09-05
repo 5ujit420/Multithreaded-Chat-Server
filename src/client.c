@@ -1,5 +1,6 @@
 #include "../include/client.h"
 #include "../include/logger.h"
+#include "../include/utils.h"
 #include <errno.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -40,7 +41,7 @@ static char *get_username(int sock_fd) {
   }
 
   while (1) {
-    if (send(sock_fd, prompt, strlen(prompt), 0) == -1) {
+    if (send_all(sock_fd, prompt, strlen(prompt)) == -1) {
       log_message(LOG_ERROR, "send failed: %s", strerror(errno));
       continue;
     }
@@ -67,7 +68,7 @@ static char *get_username(int sock_fd) {
 static void broadcast(char *msg, int sock_fd) {
   for (int i = 0; i < MAX_CLIENTS; i++) {
     if (clients[i] && clients[i]->sock_fd != sock_fd) {
-      if (send(clients[i]->sock_fd, msg, strlen(msg), 0) < 0) {
+      if (send_all(clients[i]->sock_fd, msg, strlen(msg)) < 0) {
         log_message(LOG_ERROR, "Failed to send message to %s",
                     clients[i]->username);
         continue;
@@ -109,6 +110,8 @@ static void *comm_handler(void *arg) {
     buffer[bytes] = '\0';
 
     snprintf(msg, sizeof(msg), "%s: %s", username, buffer);
+
+    log_message(LOG_INFO, msg);
 
     broadcast(msg, sock_fd);
   }

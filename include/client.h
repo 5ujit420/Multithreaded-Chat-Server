@@ -12,7 +12,6 @@ typedef struct Client {
   struct sockaddr_storage addr;
   socklen_t addrlen;
   char *username;
-  pthread_t pid;
 } client_t;
 
 client_t *constructor(int sock_fd, struct sockaddr_storage addr,
@@ -21,5 +20,7 @@ client_t *constructor(int sock_fd, struct sockaddr_storage addr,
 int add_client(int server_fd);
 
 int remove_client(int sock_fd);
+
+int remove_all_clients();
 
 #endif

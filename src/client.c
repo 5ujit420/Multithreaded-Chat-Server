@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 client_t *clients[MAX_CLIENTS];
+pthread_mutex_t client_mutex;
 
 // ======================
 //      Constructor
@@ -22,7 +23,8 @@ client_t *constructor(int sock_fd, struct sockaddr_storage addr,
   client->sock_fd = sock_fd;
   client->addr = addr;
   client->addrlen = addr_len;
-  client->username = username;
+  client->username = strdup(username);
+  free(username);
 
   return client;
 }
@@ -66,13 +68,24 @@ static char *get_username(int sock_fd) {
 }
 
 static void broadcast(char *msg, int sock_fd) {
+  int sockfds[MAX_CLIENTS];
+  char *usernames[MAX_CLIENTS];
+  int n = 0;
+
+  pthread_mutex_lock(&client_mutex);
   for (int i = 0; i < MAX_CLIENTS; i++) {
     if (clients[i] && clients[i]->sock_fd != sock_fd) {
-      if (send_all(clients[i]->sock_fd, msg, strlen(msg)) < 0) {
-        log_message(LOG_ERROR, "Failed to send message to %s",
-                    clients[i]->username);
-        continue;
-      }
+      sockfds[n] = clients[i]->sock_fd;
+      usernames[n] = clients[i]->username;
+      n++;
+    }
+  }
+  pthread_mutex_unlock(&client_mutex);
+
+  for (int i = 0; i < n; i++) {
+    if (send_all(sockfds[i], msg, strlen(msg)) < 0) {
+      log_message(LOG_ERROR, "Unable to send message to %s", usernames[i]);
+      continue;
     }
   }
 }
@@ -143,8 +156,13 @@ int add_client(int server_fd) {
   socklen_t addr_len = sizeof(addr);
   int sock_fd = accept(server_fd, (struct sockaddr *)&addr, &addr_len);
 
+  if (errno == 4) {
+    close(sock_fd);
+    return 0;
+  }
+
   if (sock_fd < 0) {
-    log_message(LOG_ERROR, "accept: %s", strerror(errno));
+    log_message(LOG_ERROR, "accept: %s, %d", strerror(errno), errno);
     close(sock_fd);
     return -2;
   }
@@ -155,15 +173,23 @@ int add_client(int server_fd) {
     return -3;
   }
 
+  pthread_mutex_lock(&client_mutex);
   clients[i] = constructor(sock_fd, addr, addr_len, username);
+  pthread_mutex_unlock(&client_mutex);
 
   pthread_t pid;
   if (pthread_create(&pid, NULL, comm_handler, (void *)clients[i]) != 0) {
+    close(clients[i]->sock_fd);
+    free(clients[i]->username);
+    free(clients[i]);
+    clients[i] = NULL;
     log_message(LOG_ERROR, "pthread: %s", strerror(errno));
+    char wel_msg[1024];
+    snprintf(wel_msg, sizeof(wel_msg), "%s joined the chat!!!",
+             clients[i]->username);
+    broadcast(wel_msg, clients[i]->sock_fd);
     return -4;
   }
-
-  clients[i]->pid = pid;
 
   return 0;
 }
@@ -174,15 +200,38 @@ int add_client(int server_fd) {
 int remove_client(int sock_fd) {
 
   int i;
+  pthread_mutex_lock(&client_mutex);
   for (i = 0; i < MAX_CLIENTS; i++) {
     if (clients[i] && clients[i]->sock_fd == sock_fd) {
       close(clients[i]->sock_fd);
       free(clients[i]->username);
       free(clients[i]);
       clients[i] = NULL;
+      pthread_mutex_unlock(&client_mutex);
       return 0;
     }
   }
+  pthread_mutex_unlock(&client_mutex);
 
   return -1;
+}
+
+int remove_all_clients() {
+
+  int i;
+  pthread_mutex_lock(&client_mutex);
+  for (i = 0; i < MAX_CLIENTS; i++) {
+    if (clients[i]) {
+      close(clients[i]->sock_fd);
+      log_message(LOG_INFO, "Client %s disconnected", clients[i]->username);
+      free(clients[i]->username);
+      free(clients[i]);
+      clients[i] = NULL;
+    }
+  }
+  pthread_mutex_unlock(&client_mutex);
+
+  pthread_mutex_destroy(&client_mutex);
+
+  return 0;
 }

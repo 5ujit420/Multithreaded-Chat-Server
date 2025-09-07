@@ -2,9 +2,12 @@
 #define SERVER_H
 
 #include "client.h"
+#include <sys/socket.h>
 
-int init_server(char *PORT);
+int start_server(char *PORT);
 
 void run_server(int sock_fd);
+
+void stop_server(int sock_fd);
 
 #endif

@@ -7,7 +7,10 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  run_server(init_server(argv[1]));
+  char *port = argv[1];
+  int server_fd = start_server(port);
+  run_server(server_fd);
+  stop_server(server_fd);
 
   return 0;
 }

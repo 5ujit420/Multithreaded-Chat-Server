@@ -32,17 +32,15 @@ int start_server(char *PORT) {
   struct addrinfo *itr;
   int sock_fd;
   for (itr = sockList; itr != NULL; itr = itr->ai_next) {
-    log_message(LOG_INFO, "Creating Socket.");
 
     sock_fd = socket(itr->ai_family, itr->ai_socktype, itr->ai_protocol);
 
     if (sock_fd == -1)
       continue;
 
-    log_message(LOG_INFO, "Socket created.");
-    log_message(LOG_INFO, "Binding Socket");
+    log_message(LOG_INFO, MSG_SOCK_CREATED);
     if (bind(sock_fd, itr->ai_addr, itr->ai_addrlen) == 0) {
-      log_message(LOG_INFO, "Socket bound to port %s.", PORT);
+      log_message(LOG_INFO, MSG_SOCK_BOUND, PORT);
       break;
     }
 
@@ -52,7 +50,7 @@ int start_server(char *PORT) {
   freeaddrinfo(sockList);
 
   if (itr == NULL) {
-    log_message(LOG_ERROR, "Unable to create socket");
+    log_message(LOG_ERROR, MSG_SOCK_CREATE_FAIL);
     exit(EXIT_FAILURE);
   }
 
@@ -62,7 +60,7 @@ int start_server(char *PORT) {
     exit(EXIT_FAILURE);
   }
 
-  log_message(LOG_INFO, "Server Listening at port %s...", PORT);
+  log_message(LOG_INFO, MSG_SERVER_LISTEN, PORT);
 
   return sock_fd;
 }
@@ -86,13 +84,13 @@ void run_server(int sock_fd) {
 
 void stop_server(int sock_fd) {
   printf("\n");
-  log_message(LOG_INFO, "Stoping server...");
+  log_message(LOG_INFO, MSG_SERVER_STOPING);
   if (remove_all_clients() < 0) {
-    log_message(LOG_ERROR, "remove_all_clients failed");
+    log_message(LOG_ERROR, "remove_all_clients: failed");
     exit(1);
   }
 
   close(sock_fd);
-  log_message(LOG_INFO, "Server socket closed");
-  log_message(LOG_INFO, "Server stoped cleanly");
+  log_message(LOG_INFO, MSG_SOCK_CLOSED);
+  log_message(LOG_INFO, MSG_SERVER_STOPED);
 }

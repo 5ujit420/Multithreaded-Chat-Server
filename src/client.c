@@ -44,13 +44,13 @@ static char *get_username(int sock_fd) {
 
   while (1) {
     if (send_all(sock_fd, prompt, strlen(prompt)) == -1) {
-      log_message(LOG_ERROR, "send failed: %s", strerror(errno));
+      log_message(LOG_ERROR, MSG_SEND_FAILED, strerror(errno));
       continue;
     }
 
     int bytes = recv(sock_fd, username, 20, 0);
     if (bytes <= 0) {
-      log_message(LOG_ERROR, "Client disconnected");
+      log_message(LOG_ERROR, MSG_CLIENT_DISCONNECT, username);
       free(username);
       return NULL;
     }
@@ -84,7 +84,7 @@ static void broadcast(char *msg, int sock_fd) {
 
   for (int i = 0; i < n; i++) {
     if (send_all(sockfds[i], msg, strlen(msg)) < 0) {
-      log_message(LOG_ERROR, "Unable to send message to %s", usernames[i]);
+      log_message(LOG_ERROR, MSG_SEND_FAILED, usernames[i]);
       continue;
     }
   }
@@ -96,8 +96,12 @@ static void *comm_handler(void *arg) {
   client_t *client = (client_t *)arg;
   int sock_fd = client->sock_fd;
   char *username = client->username;
+  char wel_msg[1024];
 
-  log_message(LOG_INFO, "Client %s connected", username);
+  snprintf(wel_msg, sizeof(wel_msg), "%s joined the chat!!!\n", username);
+  broadcast(wel_msg, sock_fd);
+
+  log_message(LOG_INFO, MSG_CLIENT_CONNECT, username);
 
   char buffer[1024];
   char msg[2048];
@@ -108,19 +112,19 @@ static void *comm_handler(void *arg) {
     bytes = recv(sock_fd, buffer, sizeof(buffer) - 1, 0);
 
     if (bytes == 0) {
-      log_message(LOG_INFO, "Client %s disconnected.", username);
+      log_message(LOG_INFO, MSG_CLIENT_DISCONNECT, username);
       remove_client(sock_fd);
       return NULL;
     }
 
     if (bytes < 0) {
-      log_message(LOG_ERROR, "Client %s disconnected with error: %s", username,
+      log_message(LOG_DEBUG, MSG_CLIENT_DISCONNECT_ERROR, username,
                   strerror(errno));
       remove_client(sock_fd);
       return NULL;
     }
 
-    buffer[bytes] = '\0';
+    buffer[bytes - 1] = '\0';
 
     snprintf(msg, sizeof(msg), "%s: %s", username, buffer);
 
@@ -184,10 +188,6 @@ int add_client(int server_fd) {
     free(clients[i]);
     clients[i] = NULL;
     log_message(LOG_ERROR, "pthread: %s", strerror(errno));
-    char wel_msg[1024];
-    snprintf(wel_msg, sizeof(wel_msg), "%s joined the chat!!!",
-             clients[i]->username);
-    broadcast(wel_msg, clients[i]->sock_fd);
     return -4;
   }
 
@@ -203,6 +203,11 @@ int remove_client(int sock_fd) {
   pthread_mutex_lock(&client_mutex);
   for (i = 0; i < MAX_CLIENTS; i++) {
     if (clients[i] && clients[i]->sock_fd == sock_fd) {
+      char lev_msg[1024];
+      snprintf(lev_msg, sizeof(lev_msg), "%s left the chat!!!\n",
+               clients[i]->username);
+      broadcast(lev_msg, sock_fd);
+
       close(clients[i]->sock_fd);
       free(clients[i]->username);
       free(clients[i]);
@@ -223,7 +228,7 @@ int remove_all_clients() {
   for (i = 0; i < MAX_CLIENTS; i++) {
     if (clients[i]) {
       close(clients[i]->sock_fd);
-      log_message(LOG_INFO, "Client %s disconnected", clients[i]->username);
+      log_message(LOG_INFO, MSG_CLIENT_DISCONNECT, clients[i]->username);
       free(clients[i]->username);
       free(clients[i]);
       clients[i] = NULL;

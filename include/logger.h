@@ -22,5 +22,7 @@ void log_message(log_level_t level, const char *fmt, ...);
 #define MSG_SERVER_STOPED "Server stoped cleanly"
 #define MSG_CLIENT_CONNECT "Client connected as %s"
 #define MSG_CLIENT_DISCONNECT "Client %s disconnected"
+#define MSG_CLIENT_DISCONNECT_ERROR "Client %s disconnected with error: %s"
+#define MSG_SEND_FAILED "Failed to send the message: %s"
 
 #endif
